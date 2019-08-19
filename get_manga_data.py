@@ -26,9 +26,10 @@ def get_raw_spectra_matrix(data_path):
 
     waves = []
     spectra = []
+    all_spxl_count = 0
 
     for path, subdirs, files in os.walk(data_path):
-        for cube_file_name in files[:10]:
+        for cube_file_name in files:
 
             cube_path = os.path.join(path, cube_file_name)
             cube = Cube(cube_path)
@@ -58,9 +59,12 @@ def get_raw_spectra_matrix(data_path):
                     spectra += [spx.flux.value]
                     waves += [wave]
                     count = count + 1
+                    all_spxl_count = all_spxl_count + 1
 
 
             print('Got {} pixels from {}'.format( count, galaxy))
+        if all_spxl_count > 1000:
+            break
 
             #except:
             #    print('Error for cube {}'.format(cube_path))
