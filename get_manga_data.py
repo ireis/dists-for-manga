@@ -85,7 +85,7 @@ def get_raw_spectra_matrix(raw_data_path):
                             count = count + 1
                             all_spxl_count = all_spxl_count + 1
 
-                    print('Got {} pixels from {}. Total so far:'.format( count, galaxy, all_spxl_count))
+                    print('Got {} pixels from {}. Total so far {}:'.format( count, galaxy, all_spxl_count))
 
                 except:
                     print('Error for cube {}'.format(cube_path))
