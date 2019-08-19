@@ -111,6 +111,6 @@ def get_raw_spectra_matrix(raw_data_path):
 
 if __name__ == '__main__':
     meta, waves, spectra = get_raw_spectra_matrix(raw_data_path)
-    pandas.to_csv(metadata_path)
+    manga_metadata.to_csv(metadata_path)
     numpy.save(wave_path, waves)
     numpy.save(specra_path, spectra)
