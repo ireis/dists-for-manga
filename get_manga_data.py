@@ -44,7 +44,7 @@ def get_raw_spectra_matrix(data_path):
             spxls = cube[high_snr_pixels]
 
             count = 0
-            for spx in spaxels:
+            for spx in spxls:
                 if spx.quality_flags[1].bits is None:
                     x_list += [spx.x_cen]
                     y_list += [spx.y_cen]
