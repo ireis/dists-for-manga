@@ -53,42 +53,43 @@ def get_raw_spectra_matrix(raw_data_path):
     for path, subdirs, files in os.walk(raw_data_path):
         for cube_file_name in files:
             if not cube_file_name in file_name_list:
-                cube_path = os.path.join(path, cube_file_name)
-                cube = Cube(cube_path)
+                try:
+                    cube_path = os.path.join(path, cube_file_name)
+                    cube = Cube(cube_path)
 
-                galaxy = cube.nsa['iauname']
-                z = cube.nsa['z']
-                wave = get_rest_wave(z)
+                    galaxy = cube.nsa['iauname']
+                    z = cube.nsa['z']
+                    wave = get_rest_wave(z)
 
-                maps = cube.getMaps()
-                snr = maps.bin_snr
-                high_snr_pixels = numpy.where(snr.value > 10)
-                nof_high_snr_pixels = high_snr_pixels[0].size
-                spxls = cube[high_snr_pixels]
+                    maps = cube.getMaps()
+                    snr = maps.bin_snr
+                    high_snr_pixels = numpy.where(snr.value > 10)
+                    nof_high_snr_pixels = high_snr_pixels[0].size
+                    spxls = cube[high_snr_pixels]
 
-                count = 0
-                for spx in spxls:
-                    if spx.quality_flags[1].bits is None:
-                        x_list += [spx.x]
-                        y_list += [spx.y]
+                    count = 0
+                    for spx in spxls:
+                        if spx.quality_flags[1].bits is None:
+                            x_list += [spx.x]
+                            y_list += [spx.y]
 
-                        z_list += [z]
-                        ra_list += [spx.ra]
-                        dec_list += [spx.dec]
+                            z_list += [z]
+                            ra_list += [spx.ra]
+                            dec_list += [spx.dec]
 
-                        galaxy_name_list += [galaxy]
-                        file_name_list += [cube_file_name]
+                            galaxy_name_list += [galaxy]
+                            file_name_list += [cube_file_name]
 
-                        spectra += [spx.flux.value]
-                        waves += [wave]
-                        count = count + 1
-                        all_spxl_count = all_spxl_count + 1
+                            spectra += [spx.flux.value]
+                            waves += [wave]
+                            count = count + 1
+                            all_spxl_count = all_spxl_count + 1
 
-                print('Got {} pixels from {}'.format( count, galaxy))
+                    print('Got {} pixels from {}. Total so far:'.format( count, galaxy, all_spxl_count))
 
-                #except:
-                #    print('Error for cube {}'.format(cube_path))
-                #    pass
+                except:
+                    print('Error for cube {}'.format(cube_path))
+                    pass
 
                 if all_spxl_count > 1000:
                     break
