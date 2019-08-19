@@ -46,8 +46,8 @@ def get_raw_spectra_matrix(data_path):
             count = 0
             for spx in spxls:
                 if spx.quality_flags[1].bits is None:
-                    x_list += [spx.x_cen]
-                    y_list += [spx.y_cen]
+                    x_list += [spx.x]
+                    y_list += [spx.y]
 
                     z_list += [z]
                     ra_list += [spx.ra]
