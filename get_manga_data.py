@@ -29,41 +29,42 @@ def get_raw_spectra_matrix(data_path):
 
     for path, subdirs, files in os.walk(data_path):
         for cube_file_name in files:
-            try:
-                cube_path = os.path.join(path, cube_file_name)
-                cube = Cube(cube_path)
 
-                galaxy = cube.nsa['iauname']
-                z = cube.nsa['z']
-                wave = get_rest_wave(z)
+            cube_path = os.path.join(path, cube_file_name)
+            cube = Cube(cube_path)
 
-                maps = cube.getMaps()
-                snr = maps.bin_snr
-                high_snr_pixels = numpy.where(snr.value > 10)
-                nof_high_snr_pixels = high_snr_pixels[0].size
-                spxls = cube[nof_high_snr_pixels]
+            galaxy = cube.nsa['iauname']
+            z = cube.nsa['z']
+            wave = get_rest_wave(z)
 
-                count = 0
-                for spx in spaxels:
-                    if spx.quality_flags[1].bits is None:
-                        x_list += [spx.x_cen]
-                        y_list += [spx.y_cen]
+            maps = cube.getMaps()
+            snr = maps.bin_snr
+            high_snr_pixels = numpy.where(snr.value > 10)
+            nof_high_snr_pixels = high_snr_pixels[0].size
+            spxls = cube[nof_high_snr_pixels]
 
-                        z_list += [z]
-                        ra_list += [spx.ra]
-                        dec_list += [spx.dec]
+            count = 0
+            for spx in spaxels:
+                if spx.quality_flags[1].bits is None:
+                    x_list += [spx.x_cen]
+                    y_list += [spx.y_cen]
 
-                        galaxy_name_list += [galaxy]
+                    z_list += [z]
+                    ra_list += [spx.ra]
+                    dec_list += [spx.dec]
 
-                        spectra += [spx.flux.value]
-                        waves += [wave]
-                        count = count + 1
+                    galaxy_name_list += [galaxy]
+
+                    spectra += [spx.flux.value]
+                    waves += [wave]
+                    count = count + 1
 
 
-                print('Got {} pixels from {}', count, galaxy)
-            except:
-                print('Error for cube {}'.format(cube_path))
-                pass
+            print('Got {} pixels from {}', count, galaxy)
+
+            #except:
+            #    print('Error for cube {}'.format(cube_path))
+            #    pass
 
     manga_metadata = pandas.DataFrame()
     manga_metadata['x'] = x_list
