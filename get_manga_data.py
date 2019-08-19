@@ -51,9 +51,8 @@ def get_raw_spectra_matrix(raw_data_path):
         all_spxl_count = 0
 
     for path, subdirs, files in os.walk(raw_data_path):
-        if not cube_file_name in file_name_list:
-            for cube_file_name in files:
-
+        for cube_file_name in files:
+            if not cube_file_name in file_name_list:
                 cube_path = os.path.join(path, cube_file_name)
                 cube = Cube(cube_path)
 
