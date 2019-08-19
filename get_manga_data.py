@@ -77,5 +77,8 @@ def get_raw_spectra_matrix(data_path):
 
 
 
-
-meta, w, s = get_raw_spectra_matrix(data_path)
+if __name__ == '__main__':
+    meta, waves, spectra = get_raw_spectra_matrix(data_path)
+    pandas.to_csv(meta, index = False)
+    numpy.save('waves', waves)
+    numpy.save('spectra', spectra)
