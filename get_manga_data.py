@@ -60,7 +60,7 @@ def get_raw_spectra_matrix(data_path):
                     count = count + 1
 
 
-            print('Got {} pixels from {}', count, galaxy)
+            print('Got {} pixels from {}'.format( count, galaxy))
 
             #except:
             #    print('Error for cube {}'.format(cube_path))
