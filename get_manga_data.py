@@ -92,6 +92,8 @@ def get_raw_spectra_matrix(raw_data_path):
                 except:
                     print('Error for cube {}'.format(cube_path))
                     pass
+                if all_spxl_count > 1000:
+                    break
 
 
 
