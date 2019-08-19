@@ -28,7 +28,7 @@ def get_raw_spectra_matrix(data_path):
     spectra = []
 
     for path, subdirs, files in os.walk(data_path):
-        for cube_file_name in files:
+        for cube_file_name in files[:10]:
 
             cube_path = os.path.join(path, cube_file_name)
             cube = Cube(cube_path)
