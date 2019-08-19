@@ -41,7 +41,7 @@ def get_raw_spectra_matrix(data_path):
             snr = maps.bin_snr
             high_snr_pixels = numpy.where(snr.value > 10)
             nof_high_snr_pixels = high_snr_pixels[0].size
-            spxls = cube[nof_high_snr_pixels]
+            spxls = cube[high_snr_pixels]
 
             count = 0
             for spx in spaxels:
