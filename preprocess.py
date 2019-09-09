@@ -1,5 +1,6 @@
 import numpy
 from sklearn.preprocessing import Imputer
+from scipy.interpolate import interp1d
 
 def impute_spec(specs, wave):
 
@@ -34,3 +35,24 @@ def norm_spectra(spectra_mat):
         normed_spectra_mat[i] = normed_spec
 
     return normed_spectra_mat
+
+
+def same_grid(wave, waves, specs):
+    """
+    Putting all spectra on the same wavelength grid
+    """
+    print('Putting all spectra on the same grid wit min lambda = ', wave.min(), 'and max lambda = ', wave.max())
+
+    specs_same_grid = numpy.zeros([specs.shape[0], wave.shape[0]])
+    for i in range(waves.shape[0]):
+        specs_same_grid[i] = same_grid_single(wave, waves[i], specs[i])
+
+    return specs_same_grid
+
+def same_grid_single(wave_common, wave_orig, spec_orig):
+    """
+    Putting a single spectrum on the common wavelength grid
+    """
+    spec = numpy.interp(wave_common, wave_orig, spec_orig, left=numpy.nan, right=numpy.nan)
+
+    return spec
