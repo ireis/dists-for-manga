@@ -24,7 +24,8 @@ def get_rest_wave(z):
 
 def get_raw_spectra_matrix(raw_data_path):
 
-    if os.path.isfile(metadata_path):
+    #if os.path.isfile(metadata_path):
+    if False:
         manga_metadata = pandas.read_csv(metadata_path)
         x_list = list(manga_metadata['x'].values)
         y_list = list(manga_metadata['y'].values)
@@ -125,6 +126,6 @@ def get_raw_spectra_matrix(raw_data_path):
 
 if __name__ == '__main__':
     meta, waves, spectra = get_raw_spectra_matrix(raw_data_path)
-    manga_metadata.to_csv(metadata_path)
+    meta.to_csv(metadata_path)
     numpy.save(wave_path, waves)
     numpy.save(specra_path, spectra)
