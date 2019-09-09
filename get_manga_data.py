@@ -49,6 +49,7 @@ def get_raw_spectra_matrix(raw_data_path):
         waves = []
         spectra = []
         all_spxl_count = 0
+        temp_save_count = 0
 
     for path, subdirs, files in os.walk(raw_data_path):
         for cube_file_name in files:
@@ -63,7 +64,7 @@ def get_raw_spectra_matrix(raw_data_path):
 
                     maps = cube.getMaps()
                     snr = maps.bin_snr
-                    high_snr_pixels = numpy.where(snr.value > 10)
+                    high_snr_pixels = numpy.where(snr.value > 25)
                     nof_high_snr_pixels = high_snr_pixels[0].size
                     spxls = cube[high_snr_pixels]
 
@@ -84,6 +85,21 @@ def get_raw_spectra_matrix(raw_data_path):
                             waves += [wave]
                             count = count + 1
                             all_spxl_count = all_spxl_count + 1
+                            temp_save_count = temp_save_count + 1
+
+                    if temp_save_count > 50000:
+                        manga_metadata = pandas.DataFrame()
+                        manga_metadata['x'] = x_list
+                        manga_metadata['y'] = y_list
+                        manga_metadata['ra'] = ra_list
+                        manga_metadata['dec'] = dec_list
+                        manga_metadata['galaxy'] = galaxy_name_list
+                        manga_metadata['cube_file_name'] = file_name_list
+                        manga_metadata.to_csv(metadata_path)
+                        numpy.save(wave_path, waves)
+                        numpy.save(specra_path, spectra)
+                        temp_save_count = 0
+
 
                     print('Got {} pixels from {}. Total so far {}:'.format( count, galaxy, all_spxl_count))
 
