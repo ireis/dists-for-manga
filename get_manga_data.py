@@ -64,7 +64,7 @@ def get_raw_spectra_matrix(raw_data_path):
 
                     maps = cube.getMaps()
                     snr = maps.bin_snr
-                    high_snr_pixels = numpy.where(snr.value > 25)
+                    high_snr_pixels = numpy.where(snr.value > 15)
                     nof_high_snr_pixels = high_snr_pixels[0].size
                     spxls = cube[high_snr_pixels]
 
