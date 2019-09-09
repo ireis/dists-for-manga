@@ -27,7 +27,7 @@ def norm_spectrum(spec):
     return spec
 
 
-def norm_spectrum_all(spectra_mat):
+def norm_spectra(spectra_mat):
     normed_spectra_mat = numpy.zeros(spectra_mat.shape)
     for i, spec in enumerate(spectra_mat):
         normed_spec = norm_spectrum(spec)

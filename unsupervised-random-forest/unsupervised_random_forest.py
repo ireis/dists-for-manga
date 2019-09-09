@@ -65,7 +65,7 @@ class urf(object):
     def get_distance(self,X):
         self.get_Xs(X)
         rf_leafs, is_good = self.get_leafs()
-        distance_matrix = Parallel(n_jobs=-1)(delayed(build_distance_matrix_slow)
+        distance_matrix = Parallel(n_jobs=-1, verbose = 10)(delayed(build_distance_matrix_slow)
                                               (rf_leafs, is_good, se)          for se in self.fe)
         distance_matrix = numpy.vstack(distance_matrix)
         distance_matrix = distance_mat_fill(distance_matrix)
