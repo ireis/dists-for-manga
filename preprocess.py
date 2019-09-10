@@ -56,3 +56,12 @@ def same_grid_single(wave_common, wave_orig, spec_orig):
     spec = numpy.interp(wave_common, wave_orig, spec_orig, left=numpy.nan, right=numpy.nan)
 
     return spec
+
+if __name__ == '__main__':
+    w = numpy.load('waves.npy')
+    s = numpy.load('spectra.npy')
+    common_w = numpy.load('common_wave.npy')
+    s = same_grid(common_w, w, s)
+    s, common_w = impute_spec(s, common_w)
+    s =  norm_spectra(s)
+    numpy.save('spectra_final.npy', s)
